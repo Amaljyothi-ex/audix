@@ -1,38 +1,421 @@
+body {
+  margin: 0;
+  padding: 0;
+  background-color: #121212;
+  min-height: 100vh;
+  color: #ffffff;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
 .App {
-  text-align: center;
-}
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  align-items: center;
+}
+
+/* Modal styles */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.85);
+  display: flex;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  align-items: center;
+  z-index: 1000;
+  backdrop-filter: blur(8px);
 }
 
-.App-link {
-  color: #61dafb;
+.modal-content {
+  background-color: #1a1a1a;
+  padding: 2rem;
+  border-radius: 12px;
+  width: 90%;
+  max-width: 400px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-@keyframes App-logo-spin {
+.modal-header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.modal-logo {
+  width: 64px;
+  height: 64px;
+  margin-bottom: 1.5rem;
+  border-radius: 16px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.modal-header h2 {
+  color: #ffffff;
+  font-size: 1.75rem;
+  font-weight: 600;
+  margin-bottom: 0.75rem;
+  letter-spacing: -0.5px;
+}
+
+.modal-header p {
+  color: #9e9e9e;
+  font-size: 1rem;
+  line-height: 1.5;
+}
+
+.login-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.login-form .MuiTextField-root {
+  background-color: rgba(255, 255, 255, 0.05);
+  border-radius: 8px;
+  transition: all 0.2s ease;
+}
+
+.login-form .MuiTextField-root:hover {
+  background-color: rgba(255, 255, 255, 0.08);
+}
+
+.login-form .MuiTextField-root.Mui-focused {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.login-button {
+  background-color: #90caf9;
+  color: #121212;
+  padding: 12px 24px;
+  border-radius: 8px;
+  border: none;
+  font-weight: 500;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-transform: none;
+  width: 100%;
+}
+
+.login-button:hover {
+  background-color: #42a5f5;
+  transform: translateY(-1px);
+}
+
+.login-button:disabled {
+  background-color: rgba(144, 202, 249, 0.5);
+  cursor: not-allowed;
+  transform: none;
+}
+
+.google-logo {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+}
+
+/* Animations */
+@keyframes modalFadeIn {
   from {
-    transform: rotate(0deg);
+    opacity: 0;
+    transform: translateY(-20px) scale(0.95);
   }
   to {
-    transform: rotate(360deg);
+    opacity: 1;
+    transform: translateY(0) scale(1);
   }
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #1e1e1e;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #90caf9;
+  border-radius: 4px;
+  transition: background 0.2s ease;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #64b5f6;
+}
+
+/* Modern UI Elements */
+.upload-area {
+  border: 2px dashed rgba(255, 255, 255, 0.1);
+  border-radius: 1rem;
+  padding: 2rem;
+  text-align: center;
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+
+.upload-area:hover {
+  border-color: rgba(255, 255, 255, 0.2);
+  background-color: rgba(255, 255, 255, 0.05);
+}
+
+.tab-content {
+  background-color: #1a1a1a;
+  border-radius: 1rem;
+  padding: 1.5rem;
+  margin-top: 1rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* Loading animation */
+@keyframes pulse {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+.loading {
+  animation: pulse 1.5s infinite;
+}
+
+/* Modern button styles */
+.modern-button {
+  background-color: #90caf9;
+  color: #121212;
+  border: none;
+  border-radius: 0.75rem;
+  padding: 0.875rem 1.5rem;
+  font-weight: 500;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 4px 12px rgba(144, 202, 249, 0.2);
+}
+
+.modern-button:hover {
+  background-color: #64b5f6;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(144, 202, 249, 0.3);
+}
+
+.modern-button:active {
+  transform: translateY(0);
+}
+
+/* Text field styling */
+.modern-textfield {
+  background-color: #1a1a1a;
+  border-radius: 0.75rem;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: all 0.2s ease;
+}
+
+.modern-textfield:hover {
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+.modern-textfield:focus-within {
+  border-color: #90caf9;
+  box-shadow: 0 0 0 2px rgba(144, 202, 249, 0.2);
+}
+
+/* Sentiment Analysis Styles */
+.sentiment-card {
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.sentiment-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+}
+
+.sentiment-chip {
+  font-weight: 500;
+  letter-spacing: 0.5px;
+  padding: 4px 12px;
+  border-radius: 16px;
+  transition: all 0.2s ease;
+}
+
+.sentiment-chip:hover {
+  transform: scale(1.05);
+}
+
+.sentiment-timestamp {
+  font-family: 'Inter', monospace;
+  opacity: 0.7;
+  transition: opacity 0.2s ease;
+}
+
+.sentiment-timestamp:hover {
+  opacity: 1;
+}
+
+/* Sentiment Analysis Loading Animation */
+@keyframes sentimentPulse {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.05);
+    opacity: 0.7;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.sentiment-loading {
+  animation: sentimentPulse 2s infinite;
+}
+
+/* Sentiment Analysis Button */
+.sentiment-button {
+  background: linear-gradient(45deg, #90caf9 30%, #64b5f6 90%);
+  border: 0;
+  border-radius: 12px;
+  box-shadow: 0 3px 12px rgba(144, 202, 249, 0.3);
+  color: white;
+  height: 48px;
+  padding: 0 30px;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.sentiment-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(144, 202, 249, 0.4);
+}
+
+.sentiment-button:active {
+  transform: translateY(0);
+}
+
+.sentiment-button:disabled {
+  background: #424242;
+  color: rgba(255, 255, 255, 0.5);
+  box-shadow: none;
+}
+
+/* Sentiment Progress Bar */
+.sentiment-progress {
+  height: 6px;
+  border-radius: 3px;
+  background-color: rgba(144, 202, 249, 0.1);
+}
+
+.sentiment-progress .MuiLinearProgress-bar {
+  background: linear-gradient(45deg, #90caf9 30%, #64b5f6 90%);
+  border-radius: 3px;
+}
+
+/* Sentiment Grid Layout */
+.sentiment-grid {
+  display: grid;
+  gap: 16px;
+  padding: 16px;
+}
+
+@media (min-width: 600px) {
+  .sentiment-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 960px) {
+  .sentiment-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+/* Sentiment Emoji Animation */
+@keyframes emojiBounce {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-4px);
+  }
+}
+
+.sentiment-emoji {
+  display: inline-block;
+  animation: emojiBounce 2s infinite;
+  animation-delay: calc(var(--index) * 0.2s);
+}
+
+/* Modern Tab Styles */
+.MuiTabs-root {
+  position: relative;
+  min-height: 64px;
+  background-color: #1a1a1a;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.MuiTab-root {
+  position: relative;
+  min-height: 64px;
+  padding: 12px 24px;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.MuiTab-root.Mui-selected {
+  background: linear-gradient(180deg, rgba(144, 202, 249, 0.08) 0%, rgba(144, 202, 249, 0) 100%);
+}
+
+.MuiTab-root:hover:not(.Mui-selected) {
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.04) 0%, rgba(255, 255, 255, 0) 100%);
+}
+
+.MuiTab-root .MuiSvgIcon-root {
+  transition: transform 0.3s ease;
+}
+
+.MuiTab-root.Mui-selected .MuiSvgIcon-root {
+  transform: scale(1.1);
+}
+
+.MuiTab-root .MuiTypography-root {
+  font-weight: 500;
+  letter-spacing: 0.3px;
+  transition: all 0.3s ease;
+}
+
+.MuiTab-root.Mui-selected .MuiTypography-root {
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+
+/* Tab Content Transition */
+.tab-content-enter {
+  opacity: 0;
+  transform: translateY(10px);
+}
+
+.tab-content-enter-active {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 300ms, transform 300ms;
+}
+
+.tab-content-exit {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.tab-content-exit-active {
+  opacity: 0;
+  transform: translateY(-10px);
+  transition: opacity 300ms, transform 300ms;
 }
