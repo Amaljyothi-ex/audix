@@ -87,8 +87,6 @@ const darkTheme = createTheme({
 });
 
 // Get environment variables
-const VALID_EMAIL = process.env.REACT_APP_VALID_EMAIL;
-const VALID_PASSWORD = process.env.REACT_APP_VALID_PASSWORD;
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 
 function App() {
@@ -111,7 +109,8 @@ function App() {
   useEffect(() => {
     // Check if user is already logged in
     const savedUser = localStorage.getItem('user');
-    if (savedUser) {
+    const savedTokens = localStorage.getItem('tokens');
+    if (savedUser && savedTokens) {
       setUser(JSON.parse(savedUser));
       setShowAuthModal(false);
     }
@@ -122,21 +121,24 @@ function App() {
       setLoading(true);
       setError('');
       
-      // Check against environment variables
-      if (email === VALID_EMAIL && password === VALID_PASSWORD) {
-        const userData = {
-          email: email,
-          displayName: "Audix User",
-          photoURL: null
-        };
-        setUser(userData);
-        localStorage.setItem('user', JSON.stringify(userData));
+      const response = await axios.post(`${BACKEND_URL}/api/token/`, {
+        email: email,
+        password: password
+      });
+
+      if (response.data) {
+        const { access, refresh, user } = response.data;
+        
+        // Store tokens and user data
+        localStorage.setItem('tokens', JSON.stringify({ access, refresh }));
+        localStorage.setItem('user', JSON.stringify(user));
+        
+        // Set user state
+        setUser(user);
         setShowAuthModal(false);
-      } else {
-        setError('Invalid email or password');
       }
     } catch (error) {
-      setError('Authentication failed: ' + error.message);
+      setError('Authentication failed: ' + (error.response?.data?.detail || error.message));
     } finally {
       setLoading(false);
     }
@@ -145,6 +147,7 @@ function App() {
   const handleLogout = () => {
     setUser(null);
     localStorage.removeItem('user');
+    localStorage.removeItem('tokens');
     setShowAuthModal(true);
   };
 
